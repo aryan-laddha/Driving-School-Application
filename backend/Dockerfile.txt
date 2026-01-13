@@ -1,0 +1,23 @@
+# Stage 1: Build using Maven and Java 21
+FROM maven:3.9.6-eclipse-temurin-21 AS build
+WORKDIR /app
+
+# Copy only the files needed for building
+COPY . .
+
+# Ensure the wrapper is executable and build the jar
+RUN chmod +x mvnw
+RUN ./mvnw clean package -DskipTests
+
+# Stage 2: Run using Java 21 JRE (Lightweight)
+FROM eclipse-temurin:21-jre
+WORKDIR /app
+
+# Copy the built jar from the build stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Expose the port Spring Boot runs on
+EXPOSE 8080
+
+# Run with a memory limit to fit in Render's Free Tier (512MB)
+ENTRYPOINT ["java", "-Xmx300m", "-jar", "app.jar"]
