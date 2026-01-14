@@ -63,7 +63,7 @@
             CorsConfiguration configuration = new CorsConfiguration();
 
             // Allowed origins (your React dev server)
-            configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:5174"));
+            configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:5174", "https://welcomedrivingschool.netlify.app"));
 
             // Allowed methods (must include OPTIONS for preflight)
             configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT","PATCH", "DELETE", "OPTIONS"));

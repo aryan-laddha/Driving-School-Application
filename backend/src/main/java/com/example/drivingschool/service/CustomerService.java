@@ -600,7 +600,7 @@ public class CustomerService {
     private final RestTemplate restTemplate = new RestTemplate();
 
     // Change this to your driving school's actual center point
-    private final String DEFAULT_FROM_ADDRESS = "Pune Station, Maharashtra";
+    private final String DEFAULT_FROM_ADDRESS = "C-31, R K Colony, Bhilwara, Rajasthan 311001 ";
 
     /**
      * Calculates distance from center point to customer address using OpenRouteService.
