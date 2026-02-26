@@ -66,7 +66,7 @@ public class AuthController {
 
     // ✅ Fetch all users (ADMIN only)
     @GetMapping("/users")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER', 'USER')")
     public ApiResponse<List<UserResponseDto>> getAllUsers() {
         List<UserResponseDto> users = userService.getAllUsers();
         return new ApiResponse<>(true, "All users fetched successfully", users);
