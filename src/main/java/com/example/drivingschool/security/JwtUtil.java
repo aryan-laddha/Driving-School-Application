@@ -3,6 +3,7 @@ package com.example.drivingschool.security;
 import com.example.drivingschool.model.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -14,8 +15,16 @@ import java.util.Map;
 @Component
 public class JwtUtil {
 
-    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256); // Replace with a fixed secret for production
-    private final long expiration = 1000 * 60 * 60 * 24; // 1 day
+    private final Key key;
+    private final long expiration;
+
+    public JwtUtil(
+            @Value("${jwt.secret}") String secret,
+            @Value("${jwt.expiration-ms}") long expiration
+    ) {
+        this.key = Keys.hmacShaKeyFor(secret.getBytes());
+        this.expiration = expiration;
+    }
 
     public String generateToken(User user) {
         Map<String, Object> claims = Map.of("roles", List.of(user.getRole().name()));
